@@ -1,25 +1,180 @@
-<!DOCTYPE html>
-<html>
+
+<!doctype html>
+<html lang="en">
 <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Subnify — Deploy Websites in One Click</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Subnify — Deploy websites in one click. Built for beginners and phones." />
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
-    button { padding: 15px 25px; font-size: 18px; cursor: pointer; }
-    h1 { font-size: 36px; margin-top: 20px; }
-    p { font-size: 18px; margin-top: 10px; }
-    img { max-width: 200px; height: auto; }
-    .btn { background-color: #007bff; border: none; padding: 15px 25px; font-size: 18px; cursor: pointer; color: white; border-radius: 5px; }
+    :root{
+      --bg:#f7fbff;
+      --card:#ffffff;
+      --brand:#007bff;
+      --muted:#6b7280;
+      --radius:12px;
+      --max-width:920px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:linear-gradient(180deg, #f4f9ff 0%, var(--bg) 100%);
+      color:#0f172a;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      line-height:1.4;
+    }
+
+    .container{
+      width:100%;
+      max-width:var(--max-width);
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:28px;
+      box-shadow:0 8px 30px rgba(15,23,42,0.08);
+      display:grid;
+      gap:20px;
+      grid-template-columns: 1fr;
+      align-items:center;
+    }
+
+    @media(min-width:720px){
+      .container{grid-template-columns: 220px 1fr;}
+    }
+
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:16px;
+    }
+    .logo img{width:84px;height:84px;object-fit:contain;border-radius:10px}
+    h1{margin:0;font-size:1.6rem}
+    p.lead{margin:6px 0 0;color:var(--muted);font-size:1rem}
+
+    .cta-wrap{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+    .btn{
+      appearance:none;
+      border:0;
+      background:var(--brand);
+      color:white;
+      padding:12px 18px;
+      border-radius:10px;
+      font-weight:600;
+      font-size:1rem;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      box-shadow:0 6px 18px rgba(0,123,255,0.14);
+    }
+    .btn[disabled], .btn.disabled{
+      background:linear-gradient(180deg,#dbeafe,#c7e0ff);
+      color:#ffffffcc;
+      cursor:not-allowed;
+      box-shadow:none;
+      filter:grayscale(0.05);
+    }
+    .btn:focus{outline:3px solid rgba(0,123,255,0.18);outline-offset:3px}
+
+    .meta{color:var(--muted);font-size:0.95rem}
+
+    .coming-soon{display:inline-block;background:#fff4e5;color:#92400e;padding:6px 10px;border-radius:999px;font-weight:600;font-size:0.85rem;border:1px solid rgba(146,64,14,0.06)}
+
+    .toast{
+      position:fixed;
+      left:50%;
+      transform:translateX(-50%);
+      bottom:22px;
+      background:#111827;
+      color:white;
+      padding:10px 14px;
+      border-radius:999px;
+      font-size:0.95rem;
+      box-shadow:0 6px 20px rgba(2,6,23,0.4);
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .22s ease;
+    }
+    .toast.show{opacity:1;pointer-events:auto}
   </style>
 </head>
 <body>
-  <img src="subnify-logo.png" alt="Subnify Logo">
-  <h1>Subnify</h1>
-  <p>Deploy websites in one click. Built for beginners and phones.</p>
-  
-  <!-- Button will just show "Coming Soon" for now -->
-  <button class="btn" disabled>Start Deploying (Coming Soon)</button>
-  
-  <p>Coming soon 🚀</p>
+  <div class="container" role="region" aria-label="Subnify landing">
+    <div class="logo" aria-hidden="false">
+      <img src="subnify-logo.png" alt="Subnify logo" />
+      <div>
+        <h1>Subnify</h1>
+        <p class="lead">Deploy websites in one click. Built for beginners and phones.</p>
+      </div>
+    </div>
+
+    <main class="cta-wrap" id="main">
+      <div>
+        <button id="deployBtn" class="btn" aria-disabled="true" disabled aria-describedby="deploy-desc">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 3v12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8 7l4-4 4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M21 21H3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Start Deploying
+        </button>
+        <span id="deploy-desc" class="meta" style="margin-left:8px">Coming soon 🚀</span>
+      </div>
+
+      <div class="meta">
+        <p style="margin:0 0 6px 0">No sign-up required — deploy directly from your phone. We’ll enable the button when the feature is available.</p>
+        <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
+          <span class="coming-soon" aria-hidden="true">Coming soon</span>
+          <small style="color:var(--muted)">Subscribe for updates or add a repo to enable the deploy integration.</small>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite">Deploy is not yet available — coming soon.</div>
+
+  <script>
+    (function(){
+      var enableDeploy = false;
+
+      var btn = document.getElementById('deployBtn');
+      var toast = document.getElementById('toast');
+
+      function showToast(msg, ms){
+        toast.textContent = msg;
+        toast.classList.add('show');
+        clearTimeout(toast._t);
+        toast._t = setTimeout(function(){ toast.classList.remove('show'); }, ms || 3000);
+      }
+
+      if(enableDeploy){
+        btn.disabled = false;
+        btn.setAttribute('aria-disabled','false');
+        document.getElementById('deploy-desc').textContent = 'Ready — click to deploy';
+        btn.addEventListener('click', function(){
+          showToast('Starting deploy…', 2500);
+        });
+      } else {
+        btn.addEventListener('click', function(e){
+          if(btn.disabled){
+            e.preventDefault();
+            showToast('Deploy is coming soon — join the waitlist.');
+          }
+        });
+        btn.addEventListener('keydown', function(e){
+          if((e.key === 'Enter' || e.key === ' ') && btn.disabled){
+            e.preventDefault();
+            showToast('Deploy is coming soon — join the waitlist.');
+          }
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
